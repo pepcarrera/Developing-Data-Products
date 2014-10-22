@@ -7,9 +7,6 @@ mtcars$cyl <- factor(mtcars$cyl)
 # Create model predicting mpg based on cylinder, horse power, weight, and transmission type (am)
 modelFit <- lm(mpg ~ cyl + hp + wt + am, data = mtcars)
 
-# Predict the mpg
-predict(modelFit,newdata=newdata)
-
 # Define server logic required to plot various variables against mpg
 shinyServer(
         function(input, output) {
