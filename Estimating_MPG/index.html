@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predicting MPG</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Predicting MPG">
+  <meta name="author" content="Pep Carrera">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Predicting MPG</h1>
+    <h2>Based on mtcars</h2>
+    <p>Pep Carrera<br/>Student in Coursera</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Our Application attemptes to predict MPG</li>
+<li>The Prediction is based on a model that uses the mtcars data set</li>
+<li>Over the next few slides you will see the model, and understand how we use it and the user inputs to easily predict your car&#39;s miles per gallon!</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>We use the mtcars data set</li>
+<li>Below you&#39;ll see a snapshot of the mtcars data</li>
+<li>As you can see there are many variables, however our best model that predicts mpg uses cyl (cylinders), hp (horse power), wt (weight, lbs divided by 1000), and am (is it automatic or manual)</li>
+</ol>
+
+<pre><code class="r">data(mtcars)
+head(mtcars)
+</code></pre>
+
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+</code></pre>
+
+<hr>
+
+<h2>The model</h2>
+
+<ol>
+<li>As previously explained, we use the 4 key data elements, but we need to do some lite data processing</li>
+<li>We&#39;ll make am and cyl factors</li>
+<li>Next you&#39;ll see us fit the model on the data set</li>
+</ol>
+
+<pre><code class="r">mtcars$am &lt;- factor(mtcars$am)
+mtcars$cyl &lt;- factor(mtcars$cyl)
+
+# Create model predicting mpg based on cylinder, horse power, weight, and transmission type (am)
+modelFit &lt;- lm(mpg ~ cyl + hp + wt + am, data = mtcars)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Predicting Miles Per Gallon</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Here we show you the prediction function that the application takes advatnage of</li>
+<li>First we create a dataframe with data from a 2010 Ford Mustang (V6 Automatic)</li>
+</ol>
+
+<pre><code class="r">newdata &lt;- data.frame(cyl=6, hp=210, wt=3401/1000, am=1)
+newdata$am &lt;- factor(newdata$am)
+newdata$cyl &lt;- factor(newdata$cyl)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>The Results</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>We run the predict function on the data</li>
+<li>Our function predicts 17.25 MPG (The actual is 19)</li>
+<li>As you can see this is a great application to predict MPG simply based on targets for a car</li>
+<li><p>Check out or app here: <a href="https://pepcarrera.shinyapps.io/Developing-Data-Products">https://pepcarrera.shinyapps.io/Developing-Data-Products</a></p></li>
+<li><p>Here is the Ford Mustang MPG official page: </p></li>
+</ol>
+
+<p><a href="http://www.fueleconomy.gov/feg/noframes/26348.shtml">http://www.fueleconomy.gov/feg/noframes/26348.shtml</a></p>
+
+<pre><code class="r">predict(modelFit,newdata=newdata)
+</code></pre>
+
+<pre><code>##     1 
+## 17.25
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Predicting Miles Per Gallon'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The Results'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
